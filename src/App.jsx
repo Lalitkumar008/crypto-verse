@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useContext, useState } from "react";
 import { Typography } from "antd";
 import "./App.css";
 import Navbar from "./components/Navbar";
@@ -10,7 +10,10 @@ import Exchanges from "./components/Exchanges";
 import News from "./components/News";
 import NewsDetail from "./components/NewsDetail";
 import CryptoDetails from "./components/CryptoDetails";
+import { CryptoContext } from "./context/CryptoContext";
 function App() {
+  const {serviceData}=useContext(CryptoContext);
+  console.log("service DATA",serviceData)
   return (
     <div className="h-[100vh] ">
       {/* <div className='navbar'>

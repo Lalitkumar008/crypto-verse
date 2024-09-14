@@ -1,6 +1,7 @@
 import React from 'react'
 import { Card, Input } from 'antd'
 import millify from 'millify'
+import { Link } from 'react-router-dom'
 const CryptoCurrencies = ({coinsData}) => {
   console.log(coinsData)
   return (
@@ -12,7 +13,7 @@ const CryptoCurrencies = ({coinsData}) => {
         />
       </div>
       {coinsData?.map((item,index)=>{
-        return index<10&& <Card 
+        return index<10&& <Link to={`/crypto/${item.uuid}`}><Card 
         title={`${item.rank}. ${item.name}`} key={item.uuid}
         hoverable
         className='w-64  rounded-none' 
@@ -21,7 +22,7 @@ const CryptoCurrencies = ({coinsData}) => {
 <p className='mb-1'>Price : {millify(item.price)}</p>
 <p className='mb-1'>Market Cap :{millify(item.marketCap)}</p>
 <p className='mb-1'>Daily Change :{millify(item.change)}</p>
-        </Card>
+        </Card></Link>
       })}
       
     </div>
