@@ -1,4 +1,6 @@
 import axios from "axios";
+
+// all coins DATA
 const optionsForAllCoins = {
   headers: {
     // "x-rapidapi-key": import.meta.env.VITE_RAPID_KEY,
@@ -15,7 +17,26 @@ export const getAllCoinsData = (onSuccess, onFailure) => {
     .then((resp) => onSuccess(resp))
     .catch((error) => onFailure(error));
 };
+// get single coin data by id
+const optionsForSingleCoin = {
+  params: {
+    referenceCurrencyUuid: "yhjMzLPhuIDl",
+    timePeriod: "24h",
+  },
+  headers: {
+    "x-rapidapi-key": "608b6a9ea5msh4904afe7849d311p1a13dbjsnd7e7e33a2d34",
+    "x-rapidapi-host": "coinranking1.p.rapidapi.com",
+  },
+};
+export const getCoinDataById = (onSuccess, onFailure, coinId) => {
+  const url = `https://coinranking1.p.rapidapi.com/coin/${coinId}`;
+  axios
+    .get(url, optionsForSingleCoin)
+    .then((resp) => onSuccess(resp))
+    .catch((error) => onFailure(error));
+};
 
+// get news data
 const optionForNews = {
   params: {
     q: "Technology", // Your search term
