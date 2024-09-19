@@ -15,7 +15,7 @@ function App() {
   const {serviceData}=useContext(CryptoContext);
   console.log("service DATA",serviceData)
   return (
-    <div className="h-[100vh] ">
+    <div className="h-[100vh] overflow-auto">
       {/* <div className='navbar'>
         <Navbar />
       </div>

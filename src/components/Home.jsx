@@ -34,7 +34,7 @@ const Home = () => {
  
   }
   return isLoading?<Loader />: (
-    <div className='w-[calc(100vw-224px)] h-[100vh] overflow-auto '>
+    <div className='w-[calc(100vw-224px)] h-[100vh] overflow-aut '>
      <Notification status={notificationStatus} notificationMsg={notificationMsg}/>
       {/* crypto different values using div and flex box*/}
        {/* <div className='bg-yellow-400 mb-2'>

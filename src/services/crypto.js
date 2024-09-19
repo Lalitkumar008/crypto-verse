@@ -36,6 +36,38 @@ export const getCoinDataById = (onSuccess, onFailure, coinId) => {
     .catch((error) => onFailure(error));
 };
 
+//get coins history
+// const optionsForCoinPriceHistroy = {
+//   params: {
+
+//   },
+//   headers: {
+
+//   },
+// };
+export const getCoinPriceHistory = (
+  onSuccess,
+  onFailure,
+  coinId,
+  timePeriod
+) => {
+  console.log("timeP>>>", timePeriod);
+  const url = `https://coinranking1.p.rapidapi.com/coin/${coinId}/history`;
+  axios
+    .get(url, {
+      params: {
+        referenceCurrencyUuid: "yhjMzLPhuIDl",
+        timePeriod: timePeriod,
+      },
+      headers: {
+        "x-rapidapi-key": "608b6a9ea5msh4904afe7849d311p1a13dbjsnd7e7e33a2d34",
+        "x-rapidapi-host": "coinranking1.p.rapidapi.com",
+      },
+    })
+    .then((resp) => onSuccess(resp))
+    .catch((error) => onFailure(error));
+};
+
 // get news data
 const optionForNews = {
   params: {

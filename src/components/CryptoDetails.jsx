@@ -4,18 +4,30 @@ import { useParams } from 'react-router-dom'
 import { Col, Divider, Row, Select, Typography } from 'antd'
 import Loader from './Loader'
 import millify from 'millify'
-import { ArrowLeftOutlined, ArrowRightOutlined, FireFilled } from '@ant-design/icons'
+import {  FireFilled } from '@ant-design/icons'
+import LineChart from './LineChart'
+import { getCoinPriceHistory } from '../services/crypto';
+import Notification from './Notification'
 const CryptoDetails = () => {
   const [cryptoData,setCryptoData]=useState();
   const [valueStatsData,setValueStatsData]=useState();
   const [otherStatsData,setOtherStatsData]=useState();
   const [isLoading,setIsLoading]=useState(true);
+
   const {Title,Text}=Typography;
   const {id}=useParams();
-  console.log("paraams",id)
+      const [timePeriodOptions,setTimePeriodOptions]=useState(["1h","3h","12h","24h","7d","30d","3m","1y","3y","5y"])
+   const [timePeriod,setTimePeriod]=useState('7d')
+    const [notificationStatus,setNotificationStataus]=useState()
+  const [notificationMsg,setNotificationMsg]=useState();
+      const [allData,setAllData]=useState();
   useEffect(()=>{
-getCoinDataById(onSuccess,onFailure,id)
+getCoinDataById(onFetchCoinByIdSuccess,onFetchCoinByIdFailure,id)
+
   },[])
+  useEffect(()=>{
+getCoinPriceHistory(onFetchCoinHistorySuccess,onFetchCoinHistoryFailure,id,timePeriod)
+  },[timePeriod])
   useEffect(()=>{
 const valueStats=[
   {
@@ -66,43 +78,68 @@ const otherStats=[
 setValueStatsData(valueStats)
 setOtherStatsData(otherStats)
   },[cryptoData])
-  const onSuccess=(e)=>{console.log(e)
+
+  // Fetch by id
+  const onFetchCoinByIdSuccess=(e)=>{
     setCryptoData(e?.data?.data?.coin);
     setIsLoading(false)
   }
-  const onFailure=(e)=>{console.log(e)}
-  return isLoading ?<Loader />:  (
-    <div className='w-[calc(100vw-224px)] overflow-auto  p-2'>
+  const onFetchCoinByIdFailure=(e)=>{}
 
-<div className='bg-red-400'>
+  // Fetch history bytimperiod
+  console.log(allData)
+
+   const onFetchCoinHistorySuccess=(e)=>{
+    setAllData(e?.data?.data)
+      
+         setNotificationStataus(true);
+   setNotificationMsg(e?.data?.status)
+          setIsLoading(false);
+              
+  }
+
+  const onFetchCoinHistoryFailure=(e)=>{console.log(e)
+  setNotificationStataus(false);
+  }
+  const handleTimePeriodOptions=(value)=>{
+  // console.log(value)
+  setTimePeriod(value)
+}
+const [showGraph,setShowGraph]=useState(false)
+useEffect(()=>{
+setTimeout(()=>{
+setShowGraph(true);
+},1000)
+},[showGraph])
+console.log(showGraph)
+  return isLoading ?<Loader />:  (
+    <div className='w-[calc(100vw-224px)] overflow-auto h-[100vh]  p-2'>
+      <Notification status={notificationStatus} notificationMsg={notificationMsg}/>
+
+<div className=''>
   <p className='text-3xl mt-8  font-bold text-blue-500 text-center '> 
   {cryptoData?.name} ({cryptoData?.symbol}) Price
 </p>
 <p className='text-center mt-4 capitalize  text-gray-500 '>
-  bitcoin live price in USD.View value statistics , market cap and supply. 
+  {cryptoData?.name} live price in USD.View value statistics , market cap and supply. 
 </p>
 </div>
 <Divider dashed className=''/>
 
 <div className='font-bold '>
-<Row className=''>
-  <Col span={12}>
-  <Select className='w-32 mb-1 border-none'
-  // onChange={}
-  >
-    <Option className="border-none" value='hello' >hello1</Option>
-    <Option value='hello2'>hello1</Option>
-    <Option value='hello3'>hello1</Option>
-    <Option value='hello4'>hello1</Option>
-    <Option value='hello5'>hello1</Option>
-  </Select>
-  </Col>
-  <Col span={12} className='flex gap-x-5  justify-end'>
-  <p className='text-lg'>change : {cryptoData?.change} %</p>
-  <p className='text-lg'>current bitcoin price: {millify(cryptoData?.price)}</p>
-  </Col>
-</Row>
-<p className='h-96 flex justify-center items-center capitalize bg-blue-400 text-7xl font-semibold text-blue-700 '>graph</p>
+
+<Select
+ placeholder='7d'
+ className='w-20 h-7 border-none'
+ onChange={handleTimePeriodOptions}
+ >
+    {timePeriodOptions.map((item,index)=>{
+  return  <Select.Option  key={index} value={item}>{item}</Select.Option>
+  })} </Select> 
+{/* </Col> */}
+
+{/* <p className='h-96 flex justify-center items-center capitalize bg-blue-400 text-7xl font-semibold text-blue-700 '>graph</p> */}
+{showGraph && <LineChart coinId={id} cryptoName={cryptoData?.name} currentPrice={cryptoData?.price} allData={allData}/>}
 </div>
 
 {/* crypto extra details */}
@@ -136,6 +173,25 @@ setOtherStatsData(otherStats)
     </div>
     </Col>
   </Row>
+</div>
+
+{/* crypto links */}
+<div className=' p-4'>
+<Row className=''>
+    <Col span={12} className=''>
+  <p className='text-4xl font-semibold text-blue-500 capitalize'>what is {cryptoData?.name}</p>
+  <p className=' h-[80%] flex justify-center items-center text-zinc-600 text-base '>{cryptoData?.description}</p>
+  </Col>
+  <Col span={12}>
+  <Title level={2}><span className='text-blue-500 capitalize'>links</span></Title>
+  {cryptoData?.links?.map((link)=>{
+    return <div className='flex justify-between p-4 hover:bg-gray-200 border-b-[1px] border-gray-200'>
+      <p className='font-bold text-zinc-600'>{link.type}</p>
+      <a className='text-blue-500' href={link.url}>{link.url}</a>
+    </div>
+  })}
+  </Col>
+</Row>
 </div>
     </div>
   )
