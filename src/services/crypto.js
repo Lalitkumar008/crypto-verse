@@ -1,12 +1,14 @@
 import axios from "axios";
-
+const rapidApiKey = import.meta.env.VITE_RAPID_KEY;
+console.log(rapidApiKey);
+const rapidApiHost = "coinranking1.p.rapidapi.com";
 // all coins DATA
 const optionsForAllCoins = {
   headers: {
-    // "x-rapidapi-key": import.meta.env.VITE_RAPID_KEY,
+    "x-rapidapi-key": rapidApiKey,
+    "x-rapidapi-host": rapidApiHost,
+    // "x-rapidapi-key": "608b6a9ea5msh4904afe7849d311p1a13dbjsnd7e7e33a2d34",
     // "x-rapidapi-host": "coinranking1.p.rapidapi.com",
-    "x-rapidapi-key": "608b6a9ea5msh4904afe7849d311p1a13dbjsnd7e7e33a2d34",
-    "x-rapidapi-host": "coinranking1.p.rapidapi.com",
   },
 };
 
@@ -24,8 +26,8 @@ const optionsForSingleCoin = {
     timePeriod: "24h",
   },
   headers: {
-    "x-rapidapi-key": "608b6a9ea5msh4904afe7849d311p1a13dbjsnd7e7e33a2d34",
-    "x-rapidapi-host": "coinranking1.p.rapidapi.com",
+    "x-rapidapi-key": rapidApiKey,
+    "x-rapidapi-host": rapidApiHost,
   },
 };
 export const getCoinDataById = (onSuccess, onFailure, coinId) => {
@@ -60,8 +62,8 @@ export const getCoinPriceHistory = (
         timePeriod: timePeriod,
       },
       headers: {
-        "x-rapidapi-key": "608b6a9ea5msh4904afe7849d311p1a13dbjsnd7e7e33a2d34",
-        "x-rapidapi-host": "coinranking1.p.rapidapi.com",
+        "x-rapidapi-key": rapidApiKey,
+        "x-rapidapi-host": rapidApiHost,
       },
     })
     .then((resp) => onSuccess(resp))
@@ -78,8 +80,8 @@ const optionForNews = {
     safeSearch: "Off", // Optional safe search filter
   },
   headers: {
-    "x-rapidapi-key": "608b6a9ea5msh4904afe7849d311p1a13dbjsnd7e7e33a2d34",
-    "x-rapidapi-host": "bing-news-search1.p.rapidapi.com",
+    "x-rapidapi-key": rapidApiKey,
+    "x-rapidapi-host": rapidApiHost,
     "X-BingApis-SDK": "true",
   },
 };
