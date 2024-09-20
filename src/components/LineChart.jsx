@@ -37,8 +37,8 @@ const LineChart = ({allData,cryptoName,currentPrice} ) => {
       const coinPriceHistoryData=[]
     const timeStampData=[]
 
-  for(let i=0;i<allData.history?.length;i++){
-            coinPriceHistoryData.push(allData.history[i].price)
+  for(let i=0;i<allData?.history?.length;i++){
+            coinPriceHistoryData?.push(allData.history[i].price)
         }
         for(let i=0;i<allData?.history?.length;i++){
             timeStampData.push(new Date(allData?.history[i].timestamp).toLocaleDateString())
