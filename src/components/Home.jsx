@@ -27,7 +27,7 @@ const Home = () => {
   // setNotificationMsg(e?.response?.data?.message || "Failed to fetch it")
  
   // }
-   
+   console.log(window.location.pathname);
   return isLoading?<Loader />: (
     <div className='w-[calc(100vw-224px)] h-[100vh] overflow-y-auto overflow-x-hidden '>
      <Notification status={notificationStatus} notificationMsg={notificationMsg}/>

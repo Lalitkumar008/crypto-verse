@@ -12,8 +12,9 @@ const CryptoCurrencies = () => {
   const {coinsData,statsData,notificationMsg,notificationStatus,isLoading}=useContext(CryptoContext)
   const [copyCoinsData,setCopyCoinsData]=useState();
   const [allCoinsData,setAllCoinsData]=useState([])
+  
   useEffect(()=>{
-    if(window.location.href.includes("crypto"))
+    if(window.location.pathname!=="/")
 setShowSearch(true);
     setCopyCoinsData(coinsData);
     setAllCoinsData(coinsData);
