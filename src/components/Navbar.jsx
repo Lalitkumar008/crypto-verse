@@ -1,15 +1,22 @@
 import React from 'react'
 import { Menu } from 'antd'
-import {Link} from "react-router-dom"
+import {Link, useNavigate} from "react-router-dom"
 import { BarsOutlined, BranchesOutlined, BulbOutlined, HomeFilled, HomeOutlined } from '@ant-design/icons'
+import navIcon from '/Lalit Study/React projects/crypto-app/public/cryptocurrencies.png';
 const Navbar = () => {
+    const navigate=useNavigate()
   return (
-    <div className='w-56    overflow-auto border-r-[1px] border-blue-400'>
-        <div className='px-4 py-6   text-center'>
-<p className='text-2xl text-blue-400 capitalize font-bold '>cryptoverse</p>
+    <div className='w-56    '>
+        <div className='px-4 py-3 h-16  text-center flex gap-x-2 items-center
+        cursor-pointer
+        ' 
+        onClick={()=>navigate('/')}
+        >
+             <img className='w-7 h-7' src={navIcon} alt="" />
+<p className='text-2xl  text-blue-400 capitalize font-bold '>cryptoPulse</p>
         </div>
         <Menu
-className='h-[100vh]'
+className='h-[calc(100vh)] overflow-auto'
         theme='dark'
         mode='inline'
         >
@@ -23,10 +30,9 @@ className='h-[100vh]'
             <Menu.Item key="echange" icon={<BranchesOutlined/>}>
                 <Link to="/exchange">Exchnages</Link>
             </Menu.Item>
-            <Menu.Item key="news"  icon={<BulbOutlined />}>
+            {/* <Menu.Item key="news"  icon={<BulbOutlined />}>
                 <Link to="/news">News</Link>
-            </Menu.Item>
-          
+            </Menu.Item> */}
            
         </Menu>
     </div>

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import {getAllCoinsData} from "../services/crypto" 
 import millify from 'millify';
 import { Statistic, Typography,Row,Col, notification } from 'antd';
@@ -7,34 +7,29 @@ import Notification from './Notification';
 import News from './News';
 import { Link } from 'react-router-dom';
 import Loader from './Loader';
-const Home = () => {
-  const [statsData,setStatsData]=useState();
-  const [coinsData,setCoinsData]=useState();
-  const [isLoading,setIsLoading]=useState(true);
-  const [notificationStatus,setNotificationStataus]=useState()
-  const [notificationMsg,setNotificationMsg]=useState()
-  useEffect(()=>{
-    setIsLoading(true)
-    getAllCoinsData(onFetchSuccess,onFetchFailure);
-  },[])
- 
-  const onFetchSuccess=(e)=>{console.log(e)
-    setCoinsData(e?.data?.data?.coins);
-    setStatsData(e?.data?.data?.stats);
-    setIsLoading(false);
-   setNotificationStataus(true);
-   setNotificationMsg(e?.data?.status)
-  }
-  
-  const onFetchFailure=(e)=>{console.log(e)
-  setNotificationStataus(false);
+import { CryptoContext } from '../context/CryptoContext';
 
-   console.log(e?.response?.data?.message)
-  setNotificationMsg(e?.response?.data?.message || "Failed to fetch it")
+const Home = () => {
+  const {coinsData,statsData,notificationMsg,notificationStatus,isLoading}=useContext(CryptoContext)
+  console.log("coinsDATAAAAAAAA",isLoading)
  
-  }
+  // const onFetchSuccess=(e)=>{console.log(e)
+  //   // setCoinsData(e?.data?.data?.coins);
+  //   setStatsData(e?.data?.data?.stats);
+  //   setIsLoading(false);
+  //  setNotificationStataus(true);
+  //  setNotificationMsg(e?.data?.status)
+  // }
+  
+  // const onFetchFailure=(e)=>{console.log(e)
+  // setNotificationStataus(false);
+  //  console.log(e?.response?.data?.message)
+  // setNotificationMsg(e?.response?.data?.message || "Failed to fetch it")
+ 
+  // }
+   
   return isLoading?<Loader />: (
-    <div className='w-[calc(100vw-224px)] h-[100vh] overflow-aut '>
+    <div className='w-[calc(100vw-224px)] h-[100vh] overflow-y-auto overflow-x-hidden '>
      <Notification status={notificationStatus} notificationMsg={notificationMsg}/>
       {/* crypto different values using div and flex box*/}
        {/* <div className='bg-yellow-400 mb-2'>
@@ -76,7 +71,10 @@ const Home = () => {
       </div> */}
 
       {/* crypto different values using ant design inbuilt component*/}
-      <Typography.Title level={2} className='bg-yellow-400 p-4 capitalize'>global crypto stats</Typography.Title>
+     <div className='flex'>
+      
+      <Typography.Title level={2} className='p-3 h-16  shadow-sm capitalize'>global crypto stats</Typography.Title>
+     </div>
       <Row className=' px-2 py-4 capitalize'>
 <Col span={12}><Statistic value={millify(statsData?.total,{
   precision:2
@@ -100,13 +98,13 @@ const Home = () => {
   <Typography.Title level={2}>Top 10 crypto currencies </Typography.Title>
 <Link className='text-blue-500 text-2xl font-medium' to='/crypto'>Show more</Link>
 </div>
-<CryptoCurrencies coinsData={coinsData} />
+<CryptoCurrencies  />
       </div>
       {/* showing news */}
-         <div>
+         {/* <div>
 <p>Get latest Crypto News </p>
 <News />
-      </div>
+      </div> */}
     </div>
   )
 }

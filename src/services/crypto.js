@@ -58,26 +58,36 @@ export const getCoinPriceHistory = (
     .catch((error) => onFailure(error));
 };
 
-// get news data
-const optionForNews = {
-  params: {
-    q: "Technology", // Your search term
-    count: "10", // Limit the number of results
-    freshness: "Day", // Freshness filter
-    textFormat: "Raw", // Optional but recommended to specify format
-    safeSearch: "Off", // Optional safe search filter
-  },
-  headers: {
-    "x-rapidapi-key": rapidApiKey,
-    "x-rapidapi-host": rapidApiHost,
-    "X-BingApis-SDK": "true",
-  },
+// exhchages data
+export const getExchangeData = (onSuccess, onFailure) => {
+  const url = `https://coingecko.p.rapidapi.com/exchanges`;
+  axios
+    .get(url, {
+      headers: {
+        "x-rapidapi-key": "608b6a9ea5msh4904afe7849d311p1a13dbjsnd7e7e33a2d34",
+        "x-rapidapi-host": "coingecko.p.rapidapi.com",
+        // "x-rapidapi-host": "coinpaprika1.p.rapidapi.com",
+      },
+    })
+    .then((resp) => onSuccess(resp))
+    .catch((error) => onFailure(error));
 };
 
+// get news data
+
 export const getAllNewsData = (onSuccess, onFailure) => {
-  const url = "https://bing-news-search1.p.rapidapi.com/news";
+  const url = "https://google-news13.p.rapidapi.com/search";
   axios
-    .get(url, optionForNews)
+    .get(url, {
+      params: {
+        keyword: "crypto-currencies",
+        lr: "en-US",
+      },
+      headers: {
+        "x-rapidapi-key": "608b6a9ea5msh4904afe7849d311p1a13dbjsnd7e7e33a2d34",
+        "x-rapidapi-host": "google-news13.p.rapidapi.com",
+      },
+    })
     .then((resp) => onSuccess(resp))
     .catch((error) => onFailure(error));
 };

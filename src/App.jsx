@@ -8,6 +8,7 @@ import { Routes, Route } from "react-router-dom";
 import CryptoCurrencies from "./components/CryptoCurrencies";
 import Exchanges from "./components/Exchanges";
 import News from "./components/News";
+import Error from "./components/Error";
 import NewsDetail from "./components/NewsDetail";
 import CryptoDetails from "./components/CryptoDetails";
 import { CryptoContext } from "./context/CryptoContext";
@@ -15,7 +16,7 @@ function App() {
   const {serviceData}=useContext(CryptoContext);
   console.log("service DATA",serviceData)
   return (
-    <div className="h-[100vh] overflow-auto">
+    <div className="">
       {/* <div className='navbar'>
         <Navbar />
       </div>
@@ -46,7 +47,7 @@ function App() {
         <Route path="/crypto/:id" element={<div style={{ display: "flex" }}>
           <Navbar/><CryptoDetails />
         </div>} />
-        <Route
+        {/* <Route
           path="/news"
           element={
             <div style={{ display: "flex" }}>
@@ -55,8 +56,8 @@ function App() {
               <News />
             </div>
           }
-        />
-        <Route
+        /> */}
+        {/* <Route
           path="/news/:id"
           element={
             <div style={{ display: "flex" }}>
@@ -65,7 +66,7 @@ function App() {
               <NewsDetail />
             </div>
           }
-        />
+        /> */}
         <Route
           path="/exchange"
           element={
@@ -76,6 +77,7 @@ function App() {
             </div>
           }
         />
+        <Route path="*" element={<Error />} />
       </Routes>
 
       {/* <div className="">
