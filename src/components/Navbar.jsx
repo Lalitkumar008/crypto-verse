@@ -2,7 +2,8 @@ import React from 'react'
 import { Menu } from 'antd'
 import {Link, useNavigate} from "react-router-dom"
 import { BarsOutlined, BranchesOutlined, BulbOutlined, HomeFilled, HomeOutlined } from '@ant-design/icons'
-import navIcon from '/Lalit Study/React projects/crypto-app/public/cryptocurrencies.png';
+// import navIcon from '/Lalit Study/React projects/crypto-app/public/cryptocurrencies.png';
+import navIcon from '/images/cryptocurrencies.png';
 const Navbar = () => {
     const navigate=useNavigate()
   return (
